@@ -1,1 +1,0 @@
-this project has been used dor k8 deployment in minikube2
