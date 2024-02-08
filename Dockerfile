@@ -1,4 +1,4 @@
-FROM node:21.6.1
+FROM nginx:1.25.3
 
 WORKDIR /app
 
