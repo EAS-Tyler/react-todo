@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maria-deployment
+  namespace: ngin
+  labels:
+    app: maria
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maria
+  template:
+    metadata:
+      labels:
+        app: maria
+    spec:
+      containers:
+      - name: mariadb
+        image: eastyler/db:works
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: "example"
+        - name: MYSQL_DATABASE
+          value: "attempt"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maria-service
+  namespace: ngin
+spec:
+  selector:
+    app: maria
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
