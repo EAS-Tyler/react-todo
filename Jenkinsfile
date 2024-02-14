@@ -40,8 +40,10 @@ pipeline {
         //         }            }
         //     }
         stage('k8s command test') {
-            withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'token-ghqdb', passwordVariable: '$RANCHER_CREDS_PSW')]) {
-                sh 'helm ls -n helmtest'
+            steps {
+                withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'token-ghqdb', passwordVariable: '$RANCHER_CREDS_PSW')]) {
+                    sh 'helm ls -n helmtest'
+                }
             }
         }
         // stage('Build') {
