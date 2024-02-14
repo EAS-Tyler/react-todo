@@ -1,1 +1,0 @@
-react app running through nginx server, using a reverse prxy (proxy_pass) to proxy to backend
