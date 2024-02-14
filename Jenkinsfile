@@ -33,7 +33,7 @@ pipeline {
         stage('rancher connection') {
             steps {
                 script {
-                    sh 'kubectl get pods'
+                    sh 'helm ls -n helmtest'
                 }            }
             }
         // stage('Build') {
