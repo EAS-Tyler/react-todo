@@ -1,9 +1,10 @@
 pipeline {
     agent any
-    // environment {
+    environment {
+        RANCHER_CREDS = credentials('3281ccd9-d78c-4108-81e6-057fd7c86ec8')
     //     NEXUS_CREDS = credentials('nexus-user-credentials')
     //     NEXUS_DOCKER_REPO = '172.16.5.13:8082'
-    // }
+    }
     stages {
         // stage('Test') {
         //     steps {
@@ -33,9 +34,16 @@ pipeline {
         stage('rancher connection') {
             steps {
                 script {
-                    sh 'helm ls -n helmtest'
+                    // sh 'helm ls -n helmtest'
+                    sh 'echo $RANCHER_CREDS'
+
                 }            }
             }
+        // stage('k8s command test') {
+        //     withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'my-user', passwordVariable: 'PASSWORD')]) {
+        //         sh 'helm ls -n helmtest'
+        //     }
+        // }
         // stage('Build') {
         //     steps {
         //         echo 'Building docker image'
