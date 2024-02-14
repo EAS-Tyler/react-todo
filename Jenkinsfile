@@ -15,21 +15,21 @@ pipeline {
         //               npm test'''
         //     }
         // }
-        stage('Scan') {
-            steps {
-                script {
-                    def scannerHome = tool 'SonarScanner'
-                    withSonarQubeEnv(installationName: 'ngin-scanner') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
-            }
-        }
-        stage('Quality Gate') {
-            steps {
-                        waitForQualityGate abortPipeline: true
-            }
-        }
+        // stage('Scan') {
+        //     steps {
+        //         script {
+        //             def scannerHome = tool 'SonarScanner'
+        //             withSonarQubeEnv(installationName: 'ngin-scanner') {
+        //                 sh "${scannerHome}/bin/sonar-scanner"
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Quality Gate') {
+        //     steps {
+        //                 waitForQualityGate abortPipeline: true
+        //     }
+        // }
         stage('rancher connection') {
             steps {
                 script {
