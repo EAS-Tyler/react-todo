@@ -18,6 +18,10 @@
 .env.test.local
 .env.production.local
 
+/my-app/README.md
+
+README2.md
+
 test.yml
 
 npm-debug.log*
