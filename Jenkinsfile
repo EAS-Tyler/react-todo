@@ -42,6 +42,8 @@ pipeline {
             steps {
                 echo 'Building docker image'
                 sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
+                sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
+
             }
         }
         stage('Push') {
@@ -49,6 +51,7 @@ pipeline {
                     script {
                         echo 'Pushing...'
                         sh 'docker push eastyler/nginsample:jenkins'
+                        sh 'docker push eastyler/backend:jenkins'
                     }
                 }
         }
@@ -61,6 +64,8 @@ pipeline {
                               helm repo update
                               helm upgrade --install my-release-adminer cetic/adminer -n jenkins
                               helm upgrade --install my-release-mariadb --set auth.rootPassword=example,auth.database=attempt oci://registry-1.docker.io/bitnamicharts/mariadb -n jenkins
+                              helm upgrade --install my-release-backend ./node-chart
+                              helm upgrade --install my-release-react ./react-chart
                               '''
         } }
                 }
