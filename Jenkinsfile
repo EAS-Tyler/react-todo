@@ -31,15 +31,22 @@ pipeline {
         //                 waitForQualityGate abortPipeline: true
         //     }
         // }
-        stage('rancher connection') {
-            steps {
-                script {
-                    sh 'kubectl config view'
-                    sh 'helm ls -n helmtest'
-                    // sh 'echo $RANCHER_CREDS'
+        // stage('rancher connection') {
+        //     steps {
+        //         script {
+        //             sh 'kubectl config view'
+        //             sh 'helm ls -n helmtest'
+        //             // sh 'echo $RANCHER_CREDS'
 
-                }            }
-            }
+        //         }            }
+        //     }
+        stage('Dump merged config') {
+            withKubeCredentials([
+        [credentialsId: 'kubeconfig']
+    ]) {
+                sh 'kubectl config view'
+    }
+        }
         // stage('k8s command test') {
         //     steps {
         //         withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'token-ghqdb', passwordVariable: 'PASSWORD')]) {
