@@ -70,20 +70,20 @@ pipeline {
                     }
                 }
         }
-        // stage('helm chart deployment') {
-        //         steps {
-        //             withKubeCredentials([
-        //     [credentialsId: 'kubeconfig']
-        // ]) {
-        //                 sh '''helm repo add cetic https://cetic.github.io/helm-charts
-        //                       helm repo update
-        //                       helm upgrade --install my-release-adminer cetic/adminer -n jenkins
-        //                       helm upgrade --install my-release-mariadb --set auth.rootPassword=example,auth.database=attempt oci://registry-1.docker.io/bitnamicharts/mariadb -n jenkins
-        //                       helm upgrade --install my-release-backend ./node-chart -n jenkins
-        //                       helm upgrade --install my-release-react ./react-chart -n jenkins
-        //                       '''
-        // } }
-        //         }
+        stage('helm chart deployment') {
+                steps {
+                    withKubeCredentials([
+            [credentialsId: 'kubeconfig']
+        ]) {
+                        sh '''helm repo add cetic https://cetic.github.io/helm-charts
+                              helm repo update
+                              helm upgrade --install my-release-adminer cetic/adminer -n jenkins
+                              helm upgrade --install my-release-mariadb --set auth.rootPassword=example,auth.database=attempt oci://registry-1.docker.io/bitnamicharts/mariadb -n jenkins
+                              helm upgrade --install my-release-backend ./node-chart -n jenkins
+                              helm upgrade --install my-release-react ./react-chart -n jenkins
+                              '''
+        } }
+                }
         // stage('Build') {
         //     steps {
         //         echo 'Building docker image'

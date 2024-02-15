@@ -22,7 +22,7 @@ confFile: |
   }  
 
 image:
-  repository: eastyler/nginsample
+  repository: 172.16.5.13:8082/nginsample
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "jenkins"
