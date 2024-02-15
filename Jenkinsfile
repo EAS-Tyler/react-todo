@@ -45,8 +45,10 @@ pipeline {
                     withKubeCredentials([
             [credentialsId: 'kubeconfig']
         ]) {
-                        sh 'kubectl config view'
-                        sh 'helm ls -n helmtest'
+                        sh '''helm repo add cetic https://cetic.github.io/helm-charts
+                              helm repo update
+                              helm upgrade --install my-release-adminer cetic/adminer -n jenkins
+                              '''
 
         } }
                 }
