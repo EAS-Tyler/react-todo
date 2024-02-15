@@ -6,7 +6,7 @@ const port = 3000
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host: "my-release2-mariadb",
+    host: "my-release-mariadb",
     user: "root",
     password: "example",
     database: "attempt",
