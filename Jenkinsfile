@@ -38,52 +38,52 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Building docker image'
-                sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
-                sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
-            }
-        }
         // stage('Build') {
         //     steps {
         //         echo 'Building docker image'
-        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/nginsample:jenkins ./my-app'
-        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/backend:jenkins ./backend'
+        //         sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
+        //         sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
         //     }
         // }
-        stage('Push') {
-                steps {
-                    script {
-                        echo 'Pushing...'
-                        sh 'docker push eastyler/nginsample:jenkins'
-                        sh 'docker push eastyler/backend:jenkins'
-                    }
-                }
+        stage('Build') {
+            steps {
+                echo 'Building docker image'
+                sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/nginsample:jenkins ./my-app'
+                sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/backend:jenkins ./backend'
+            }
         }
         // stage('Push') {
         //         steps {
         //             script {
         //                 echo 'Pushing...'
-        //                 sh 'docker push 172.16.5.13:8082/nginsample:jenkins'
-        //                 sh 'docker push 172.16.5.13:8082/backend:jenkins'
+        //                 sh 'docker push eastyler/nginsample:jenkins'
+        //                 sh 'docker push eastyler/backend:jenkins'
         //             }
         //         }
         // }
-        stage('helm chart deployment') {
+        stage('Push') {
                 steps {
-                    withKubeCredentials([
-            [credentialsId: 'kubeconfig']
-        ]) {
-                        sh '''helm repo add cetic https://cetic.github.io/helm-charts
-                              helm repo update
-                              helm upgrade --install my-release-adminer cetic/adminer -n jenkins
-                              helm upgrade --install my-release-mariadb --set auth.rootPassword=example,auth.database=attempt oci://registry-1.docker.io/bitnamicharts/mariadb -n jenkins
-                              helm upgrade --install my-release-backend ./node-chart -n jenkins
-                              helm upgrade --install my-release-react ./react-chart -n jenkins
-                              '''
-        } }
+                    script {
+                        echo 'Pushing...'
+                        sh 'docker push 172.16.5.13:8082/nginsample:jenkins'
+                        sh 'docker push 172.16.5.13:8082/backend:jenkins'
+                    }
                 }
+        }
+        // stage('helm chart deployment') {
+        //         steps {
+        //             withKubeCredentials([
+        //     [credentialsId: 'kubeconfig']
+        // ]) {
+        //                 sh '''helm repo add cetic https://cetic.github.io/helm-charts
+        //                       helm repo update
+        //                       helm upgrade --install my-release-adminer cetic/adminer -n jenkins
+        //                       helm upgrade --install my-release-mariadb --set auth.rootPassword=example,auth.database=attempt oci://registry-1.docker.io/bitnamicharts/mariadb -n jenkins
+        //                       helm upgrade --install my-release-backend ./node-chart -n jenkins
+        //                       helm upgrade --install my-release-react ./react-chart -n jenkins
+        //                       '''
+        // } }
+        //         }
         // stage('Build') {
         //     steps {
         //         echo 'Building docker image'
