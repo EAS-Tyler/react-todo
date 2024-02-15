@@ -40,9 +40,17 @@ pipeline {
 
         //         }            }
         //     }
+        //     stage('view config') {
+        //         steps {
+        //             withKubeCredentials([
+        //     [credentialsId: 'kubeconfig']
+        // ]) {
+        //                 sh 'kubectl config view'
+        // } }
+        //         }
         stage('view config') {
             steps {
-                withKubeCredentials([
+                withCredentials([
         [credentialsId: 'kubeconfig']
     ]) {
                     sh 'kubectl config view'
@@ -94,9 +102,9 @@ pipeline {
         //             }
         //         }
         }
-        // post {
-        //     always {
-        //         sh 'docker logout'
-        //     }
-        // }
-        }
+    // post {
+    //     always {
+    //         sh 'docker logout'
+    //     }
+    // }
+    }
