@@ -40,7 +40,7 @@ pipeline {
 
         //         }            }
         //     }
-        stage('Dump merged config') {
+        stage('view config') {
             steps {
                 withKubeCredentials([
         [credentialsId: 'kubeconfig']
