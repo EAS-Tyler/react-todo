@@ -34,8 +34,9 @@ pipeline {
         stage('rancher connection') {
             steps {
                 script {
-                    sh 'helm ls -n helmtest'
-                    sh 'echo $RANCHER_CREDS'
+                    sh 'kubectl config view'
+                    // sh 'helm ls -n helmtest'
+                    // sh 'echo $RANCHER_CREDS'
 
                 }            }
             }
