@@ -31,21 +31,21 @@ pipeline {
         //                 waitForQualityGate abortPipeline: true
         //     }
         // }
-        // stage('rancher connection') {
-        //     steps {
-        //         script {
-        //             // sh 'helm ls -n helmtest'
-        //             sh 'echo $RANCHER_CREDS'
-
-        //         }            }
-        //     }
-        stage('k8s command test') {
+        stage('rancher connection') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'token-ghqdb', passwordVariable: 'PASSWORD')]) {
+                script {
                     sh 'helm ls -n helmtest'
-                }
+                    sh 'echo $RANCHER_CREDS'
+
+                }            }
             }
-        }
+        // stage('k8s command test') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: '3281ccd9-d78c-4108-81e6-057fd7c86ec8', usernameVariable: 'token-ghqdb', passwordVariable: 'PASSWORD')]) {
+        //             sh 'helm ls -n helmtest'
+        //         }
+        //     }
+        // }
         // stage('Build') {
         //     steps {
         //         echo 'Building docker image'
