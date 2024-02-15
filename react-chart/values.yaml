@@ -25,7 +25,7 @@ image:
   repository: eastyler/nginsample
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "work4helm-conf"
+  tag: "jenkins"
 
 imagePullSecrets: []
 nameOverride: ""
