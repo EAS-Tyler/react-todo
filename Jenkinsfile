@@ -31,23 +31,23 @@ pipeline {
         //                 waitForQualityGate abortPipeline: true
         //     }
         // }
-        stage('rancher connection') {
-            steps {
-                script {
-                    sh 'kubectl config view'
-                    sh 'helm ls -n helmtest'
-                    // sh 'echo $RANCHER_CREDS'
+        // stage('rancher connection') {
+        //     steps {
+        //         script {
+        //             sh 'kubectl config view'
+        //             sh 'helm ls -n helmtest'
+        //             // sh 'echo $RANCHER_CREDS'
 
-                }            }
-            }
-        //     stage('view config') {
-        //         steps {
-        //             withKubeCredentials([
-        //     [credentialsId: 'kubeconfig']
-        // ]) {
-        //                 sh 'kubectl config view'
-        // } }
-        //         }
+        //         }            }
+        //     }
+            stage('view config') {
+                steps {
+                    withKubeCredentials([
+            [credentialsId: 'kubeconfig']
+        ]) {
+                        sh 'kubectl config view'
+        } }
+                }
     //     stage('view config') {
     //         steps {
     //             withCredentials([
