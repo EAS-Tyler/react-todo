@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     sh 'kubectl config view'
-                    // sh 'helm ls -n helmtest'
+                    sh 'helm ls -n helmtest'
                     // sh 'echo $RANCHER_CREDS'
 
                 }            }
