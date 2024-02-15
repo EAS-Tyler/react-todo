@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
                 DOCKERHUB_CREDENTIALS = credentials('eastyler-dockerhub')
-    // RANCHER_CREDS = credentials('3281ccd9-d78c-4108-81e6-057fd7c86ec8')
-    //     NEXUS_CREDS = credentials('nexus-user-credentials')
-    //     NEXUS_DOCKER_REPO = '172.16.5.13:8082'
+        // RANCHER_CREDS = credentials('3281ccd9-d78c-4108-81e6-057fd7c86ec8')
+        NEXUS_CREDS = credentials('nexus-user-credentials')
+        NEXUS_DOCKER_REPO = '172.16.5.13:8082'
     }
     stages {
         // stage('Test') {
@@ -43,9 +43,15 @@ pipeline {
                 echo 'Building docker image'
                 sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
                 sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
-
             }
         }
+        // stage('Build') {
+        //     steps {
+        //         echo 'Building docker image'
+        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/nginsample:jenkins ./my-app'
+        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/backend:jenkins ./backend'
+        //     }
+        // }
         stage('Push') {
                 steps {
                     script {
@@ -55,6 +61,15 @@ pipeline {
                     }
                 }
         }
+        // stage('Push') {
+        //         steps {
+        //             script {
+        //                 echo 'Pushing...'
+        //                 sh 'docker push 172.16.5.13:8082/nginsample:jenkins'
+        //                 sh 'docker push 172.16.5.13:8082/backend:jenkins'
+        //             }
+        //         }
+        // }
         stage('helm chart deployment') {
                 steps {
                     withKubeCredentials([
