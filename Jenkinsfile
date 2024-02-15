@@ -46,6 +46,8 @@ pipeline {
             [credentialsId: 'kubeconfig']
         ]) {
                         sh 'kubectl config view'
+                        sh 'helm ls -n helmtest'
+
         } }
                 }
     //     stage('view config') {
