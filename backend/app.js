@@ -32,7 +32,7 @@ app.post('/todos', (req, res) => {
         if (result.length > 0) {
             res.send("A ToDo item already exists with this title, please enter a unique title")
         } else {
-            var sql = `INSERT INTO todo (title, description, status) VALUES ("${req.body.title}", "${req.body.description}", "inprogress")`;
+            const sql = `INSERT INTO todo (title, description, status) VALUES ("${req.body.title}", "${req.body.description}", "inprogress")`;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 // console.log(result)
@@ -60,7 +60,7 @@ app.put('/todos/:id', (req, res) => {
     });
 })
 
-// update butto - updates entry by id with req body including title and description
+// update button - updates entry by id with req body including title and description
 app.post('/todos/:id', (req, res) => {
     con.query(`UPDATE todo SET title = '${req.body.title}', description = '${req.body.description}' WHERE id = ${req.params.id}`, function (err, result, fields) {
         if (err) throw err;
@@ -70,7 +70,7 @@ app.post('/todos/:id', (req, res) => {
     });
 })
 
-// read all todo items - get items as an array
+// read all items - get items as an array
 app.get('/todos', (req, res) => {
     con.query("SELECT * FROM todo", function (err, result, fields) {
         if (err) throw err;
@@ -79,7 +79,7 @@ app.get('/todos', (req, res) => {
     });
 })
 
-// read all completed todo items - get items as an array
+// read all completed items - get items as an array
 app.get('/comptodos', (req, res) => {
     con.query("SELECT * FROM todo WHERE status = 'completed'", function (err, result, fields) {
         if (err) throw err;
@@ -97,7 +97,7 @@ app.delete('/todos', (req, res) => {
         } 
      )
 
-// read single todo item - get item by id
+// read single item - get item by id
 app.get('/todos/:id', (req, res) => {
     con.query("SELECT * FROM todo WHERE id = " + req.params.id, function (err, result, fields) {
         if (err) throw err;
