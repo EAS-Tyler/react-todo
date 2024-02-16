@@ -1,11 +1,10 @@
 const express = require('express')
-// const { rootCertificates } = require('tls')
 const app = express()
 const port = 3000
 
-var mysql = require('mysql');
+const mysql = require('mysql');
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
     host: "my-release-mariadb",
     user: "root",
     password: "example",
@@ -71,15 +70,6 @@ app.post('/todos/:id', (req, res) => {
     });
 })
 
-// // read all inprogress todo items - get items as an array
-// app.get('/todos', (req, res) => {
-//     con.query("SELECT * FROM todo WHERE status = 'inprogress'", function (err, result, fields) {
-//         if (err) throw err;
-//         // console.log(result)
-//         res.json(result)
-//     });
-// })
-
 // read all todo items - get items as an array
 app.get('/todos', (req, res) => {
     con.query("SELECT * FROM todo", function (err, result, fields) {
@@ -98,33 +88,6 @@ app.get('/comptodos', (req, res) => {
     });
 })
 
-
-// update todo item
-// app.put('/todos/:id', (req, res) => {
-//     var sql = `UPDATE todo SET title = '${req.body.title}', description = '${req.body.description}' WHERE id = '${req.params.id}'`;
-//     con.query(sql, function (err, result) {
-//         if (err) throw err;
-//         console.log(`Item with id: '${req.params.id}' updated`);
-//         res.json({ "Updated the todo item:": req.body })
-//     });
-// })  
-
-// delete single todo by title 
-// app.delete('/todos', (req, res) => {
-//     con.query(`SELECT title FROM todo WHERE title = '${req.body.title}'`, function (err, result, fields) {
-//         if (err) throw err;
-//         if (result.length > 0) {
-//             var sql = `DELETE FROM todo WHERE title = '${req.body.title}'`;
-//             con.query(sql, function (err, result) {
-//                 if (err) throw err;
-//                 res.send("ToDo item successfully deleted");
-//             });
-//         } else {
-//             res.send("This item does not exist, please enter a valid title to delete");
-//         }
-//     });
-// });
-
 app.delete('/todos', (req, res) => {
             var sql = `DELETE FROM todo WHERE id = '${req.body.id}'`;
             con.query(sql, function (err, result) {
@@ -133,22 +96,6 @@ app.delete('/todos', (req, res) => {
             });
         } 
      )
-
-
-
-// mode todo via completion button
-// SELECT * FROM todo WHERE id = 
-// INSERT INTO completed (id, title, description)
-// DELETE * FROM todo 
-
-// deletes single todo by id, completion button in table
-// app.delete('/todos/:id', (req, res) => {
-//             var sql = `DELETE FROM todo WHERE id = ${req.params.id}`;
-//             con.query(sql, function (err, result) {
-//                 if (err) throw err;
-//                 res.send(`ToDo item with ID: ${req.params.id} successfully deleted`);
-//             });
-//     });
 
 // read single todo item - get item by id
 app.get('/todos/:id', (req, res) => {
@@ -159,13 +106,10 @@ app.get('/todos/:id', (req, res) => {
     });
 })
 
-
-
 app.listen(port, () => {
-
+console.log(`App listening on port ${port}`)
 })
 
-// res.json({ ...req.body }) 
 
 
 
