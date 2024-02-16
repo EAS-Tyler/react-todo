@@ -25,7 +25,7 @@ con.connect(function (err) {
     console.log("Connected!");
 });
 
-// create todo item - insert item to table, must be unique title -- redundant?
+// create item - insert item to table, must be unique title -- redundant?
 app.post('/todos', (req, res) => {
     con.query(`SELECT title FROM todo WHERE title = '${req.body.title}'`, function (err, result, fields) {
         if (err) throw err;
@@ -89,7 +89,7 @@ app.get('/comptodos', (req, res) => {
 })
 
 app.delete('/todos', (req, res) => {
-            var sql = `DELETE FROM todo WHERE id = '${req.body.id}'`;
+            const sql = `DELETE FROM todo WHERE id = '${req.body.id}'`;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 res.send("ToDo item successfully deleted");
