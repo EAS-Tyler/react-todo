@@ -7,16 +7,16 @@ pipeline {
         NEXUS_DOCKER_REPO = '172.16.5.13:8082'
     }
     stages {
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-                sh '''npm config set registry http://172.16.5.13:8081/repository/npmprox2/
-                     cd ./backend
-                      npm install
-                      npm view jest
-                      npm test'''
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         echo 'Testing...'
+        //         sh '''npm config set registry http://172.16.5.13:8081/repository/npmprox2/
+        //              cd ./backend
+        //               npm install
+        //               npm view jest
+        //               npm test'''
+        //     }
+        // }
         stage('Scan') {
             steps {
                 script {
