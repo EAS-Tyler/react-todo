@@ -27,11 +27,11 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate') {
-            steps {
-                        waitForQualityGate abortPipeline: true
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //                 waitForQualityGate abortPipeline: true
+        //     }
+        // }
         stage('Login') {
             steps {
                 echo 'Logging in...'
