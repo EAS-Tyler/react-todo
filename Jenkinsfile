@@ -7,69 +7,69 @@ pipeline {
         NEXUS_DOCKER_REPO = '172.16.5.13:8082'
     }
     stages {
-        // stage('Test') {
-        //     steps {
-        //         echo 'Testing...'
-        //         sh '''npm config set registry http://172.16.5.13:8081/repository/npmprox2/
-        //              cd ./backend
-        //               npm install
-        //               npm view jest
-        //               npm test'''
-        //     }
-        // }
-        // stage('Scan') {
-        //     steps {
-        //         script {
-        //             def scannerHome = tool 'SonarScanner'
-        //             withSonarQubeEnv(installationName: 'ngin-scanner') {
-        //                 sh "${scannerHome}/bin/sonar-scanner"
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Quality Gate') {
-        //     steps {
-        //                 waitForQualityGate abortPipeline: true
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh '''npm config set registry http://172.16.5.13:8081/repository/npmprox2/
+                     cd ./backend
+                      npm install
+                      npm view jest
+                      npm test'''
+            }
+        }
+        stage('Scan') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner'
+                    withSonarQubeEnv(installationName: 'ngin-scanner') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                        waitForQualityGate abortPipeline: true
+            }
+        }
         stage('Login') {
             steps {
                 echo 'Logging in...'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        // stage('Build') {
-        //     steps {
-        //         echo 'Building docker image'
-        //         sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
-        //         sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
-        //     }
-        // }
         stage('Build') {
             steps {
                 echo 'Building docker image'
-                sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/nginsample:jenkins ./my-app'
-                sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/backend:jenkins ./backend'
+                sh 'docker buildx build --platform linux/amd64 -t eastyler/nginsample:jenkins ./my-app'
+                sh 'docker buildx build --platform linux/amd64 -t eastyler/backend:jenkins ./backend'
             }
         }
-        // stage('Push') {
-        //         steps {
-        //             script {
-        //                 echo 'Pushing...'
-        //                 sh 'docker push eastyler/nginsample:jenkins'
-        //                 sh 'docker push eastyler/backend:jenkins'
-        //             }
-        //         }
+        // stage('Build') {
+        //     steps {
+        //         echo 'Building docker image'
+        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/nginsample:jenkins ./my-app'
+        //         sh 'docker buildx build --platform linux/amd64 -t 172.16.5.13:8082/backend:jenkins ./backend'
+        //     }
         // }
         stage('Push') {
                 steps {
                     script {
                         echo 'Pushing...'
-                        sh 'docker push 172.16.5.13:8082/nginsample:jenkins'
-                        sh 'docker push 172.16.5.13:8082/backend:jenkins'
+                        sh 'docker push eastyler/nginsample:jenkins'
+                        sh 'docker push eastyler/backend:jenkins'
                     }
                 }
         }
+        // stage('Push') {
+        //         steps {
+        //             script {
+        //                 echo 'Pushing...'
+        //                 sh 'docker push 172.16.5.13:8082/nginsample:jenkins'
+        //                 sh 'docker push 172.16.5.13:8082/backend:jenkins'
+        //             }
+        //         }
+        // }
         stage('helm chart deployment') {
                 steps {
                     withKubeCredentials([

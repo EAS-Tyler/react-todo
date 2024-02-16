@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: 172.16.5.13:8082/backend
+  # repository: 172.16.5.13:8082/backend
+  repository: eastyler/backend
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "jenkins"
